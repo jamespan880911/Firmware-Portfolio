@@ -131,6 +131,21 @@ struct ListNode* deleteDuplicates(struct ListNode *head){
     return head;
 }
 
+struct ListNode* reverseList(struct ListNode *head){
+    struct ListNode *cur = head;
+    struct ListNode *prev = NULL;
+    struct ListNode *next = NULL;
+
+    while (cur != NULL){
+        next = cur->next;
+        cur->next = prev;
+        prev = cur;
+        cur = next;
+    }
+
+    return prev;
+}
+
 //合併兩條Linklist
 struct ListNode* merge_TwoList(struct ListNode* list1, struct ListNode* list2){
     struct ListNode *dummy = NULL;
@@ -168,6 +183,8 @@ int main(){
     append_node(&list1, 3);
     append_node(&list1, 3);
     append_node(&list1, 5);
+    //print_list(list1);
+    //reverseList(&list1);
     print_list(list1);
     deleteDuplicates(list1);
     print_list(list1);
