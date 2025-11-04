@@ -5,7 +5,7 @@
 
 ---
 
-##  專案亮點
+##  專案特點
 
 ###  FreeRTOS Wi-Fi Driver / Firmware 模擬
 以 FreeRTOS 為基礎，模擬 Wi-Fi Driver 與 Firmware 間的資料流：  
