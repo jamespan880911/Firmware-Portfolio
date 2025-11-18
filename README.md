@@ -7,8 +7,8 @@
 
 ##  專案特點
 
-###  FreeRTOS Wi-Fi Driver / Firmware 模擬
-以 FreeRTOS 為基礎，模擬 Wi-Fi Driver 與 Firmware 間的資料流：  
+###  FreeRTOS  Driver / Firmware 模擬
+以 FreeRTOS 為基礎，模擬 Driver 與 Firmware 間的資料流：  
 實作 **DMA Ring Buffer、IRQ 同步機制、Bottom-half 任務分工、Firmware Power Save 模擬**。  
 重現驅動與韌體的封包傳輸與中斷互動，分析 race condition、互斥鎖與中斷遮罩的設計取捨。
 
