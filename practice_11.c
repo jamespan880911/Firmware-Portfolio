@@ -248,11 +248,6 @@ int add (int a, int b){
     }
     return a;
 }
-int main() {
-    int a = 7, b = 1;
-    printf("ans = %d\n", add(a, b));  
-    return 0;
-}
 
 // 取第N個bit的值
 int function_bit(unsigned char *a, int N){
@@ -275,10 +270,10 @@ void Find_Value(int *arr, int len){
 
     for (int i = 1; i < len; i++){
         if (*(arr + i) > *data1){
-            *data1 = arr + i;
+            data1 = arr + i;
         }
         if (*(arr + i) < *data2){
-            *data2 = arr + i;
+            data2 = arr + i;
         }
     }
 
@@ -337,14 +332,187 @@ struct result find_min_max(int a, int b, int c){
 //實作queue
 
 
+struct Queue{
+    struct ListNode *head;
+    struct ListNode *tail;
+};
+
+struct Queue *init_queue(){
+    struct Queue *q = malloc(sizeof(struct Queue));
+    q->head = NULL;
+    q->tail = NULL;
+    return q;
+}
+
+void qpush(struct Queue *queue, int data){
+    struct ListNode *node = malloc(sizeof(struct ListNode));
+    node->data = data;
+    node->next = NULL;
+
+    if (queue->head == NULL){
+        queue->head = node;
+        queue->tail = node;
+        return;
+    }
+    else{
+        queue->tail->next = node;
+        queue->tail = queue->tail->next;
+    }
+    return;
+}
+
+void qpop(struct Queue *queue){
+    if (queue->head == NULL){
+        return;
+    }
+    else{
+        struct ListNode *tmp = queue->head;
+        queue->head = queue->head->next;
+        free(tmp);
+        if(queue->head == NULL){
+            queue->tail = NULL;
+        }
+    }
+    return;
+}
+
+void print_queue(struct Queue *queue){
+    if (queue->head == NULL){
+        return;
+    }
+    else{
+        struct ListNode *cur = queue->head;
+        while (cur){
+            printf("%d -> ", cur->data);
+            cur = cur->next;
+        }
+    }
+    printf("NULL");
+    printf("\n");
+    return;
+}
+
+//sorting
+//泡泡大的一直換上去
+void bubble_sort(int *a, int len){
+    for (int i = 0; i < len; i++){
+        for (int j = 1; j < len; j++){
+            if (a[j-1] > a[j]){
+                int tmp;
+                tmp = a[j-1];
+                a[j-1] = a[j];
+                a[j] = tmp;
+            }
+        }
+    }
+}
+
+//每一輪選(selection)最小的往前放
+void selection_sort(int *a, int len){
+    for (int i = 0; i < len; i++){
+        int min = a[i];
+        int tmp = i;
+        for (int j = i; j < len; j++){
+            if (a[j] < min){
+                min = a[j];
+                tmp = j;
+            }
+        }
+        a[tmp] = a[i];
+        a[i] = min;
+    }
+}
+
+//（從第一張開始的撲克牌手排整理）從頭開始，一張一張牌選要插到前面整理好的手牌裡的哪個位置（這題要多注意）
+void insertion_sort(int *a, int len){
+    for (int i = 1; i < len; i++){
+        int key = a[i];
+        int j = i - 1;
+
+        while (j >= 0 && key < a[j]){
+            a[j + 1] = a[j];
+            j--;
+        }
+        a[j + 1] = key;
+    }
+}
+
+//每次都忘記的quick sort（比pivot小或一樣大的放左邊，比pivot大的放右邊。然後divide and conquer）
+void quick_sort(int *a,int left, int right){
+    int i = left, j = right, p = a[left];
+
+    if (left >= right){     //記得加遞迴終止條件（<=的原因是因為剩一個元素就該跳出去了）
+        return;
+    }
+
+    while (i != j){
+        while (a[j] > p && i < j){
+            j--;
+        }
+        while (a[i] <= p && i < j){
+            i++;
+        }
+
+        if (i < j){
+            int tmp;
+            tmp = a[i];
+            a[i] = a[j];
+            a[j] = tmp;
+        }
+    }
+
+    a[left] = a[i];
+    a[i] = p;
+
+    quick_sort(a, left, i - 1);
+    quick_sort(a, i + 1, right);
+}
+
+//刪除指定pos的Linklist
+struct ListNode *delete_node_index(struct ListNode **head, int index){
+    struct ListNode *cur = *head;
+    struct ListNode *pre = NULL;
+
+    if (index < 0){
+        return NULL;
+    }
+    else if (index == 0){
+        pre = cur;
+        *head = cur->next;
+        free(pre);
+        return *head;
+    }
+    
+    for (int i = 0; i < index; i++){
+        pre = cur;
+        cur = cur->next;
+        //做indext超過的檢查
+        if (cur == NULL){
+            return NULL;
+        }
+    }
+    pre->next = cur->next;
+    free(cur);
+    return *head;
+}
+
+
+
 
 int main(){
-    int *p = (int *)0x8265;
-    *p = 0x2235;
+    //int *p = (int *)0x8265;
+    //*p = 0x2235;
 
     struct result find = find_min_max(1, 2, 3);
-    printf("max is : %d\n ", find.max);
+    printf("max is : %d\n", find.max);
     printf("min is : %d\n", find.min);
 
+    struct Queue *q = NULL;
+    q = init_queue();
+    qpush(q, 10);
+    qpush(q, 8);
+    print_queue(q);
+    qpop(q);
+    print_queue(q);
     return 0;
 }
