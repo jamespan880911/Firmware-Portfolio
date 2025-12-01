@@ -90,7 +90,7 @@ static void vWiFiDriverTx(void *p)
         pkt->seq = seq++;
         snprintf(pkt->payload, sizeof(pkt->payload), "TX Packet #%lu", (unsigned long)pkt->seq);
 
-        /* 使用 TX Mutex 保護 TX Ring */
+        // 用 TX Mutex 保護 TX Ring 
         xSemaphoreTake(xTxMutex, portMAX_DELAY);
         if (sdio_write((uint8_t *)pkt, sizeof(wifi_pkt_t)) == 0)
             print_time("[Driver] TX → FW");
@@ -98,7 +98,7 @@ static void vWiFiDriverTx(void *p)
             print_time("[Driver] TX Ring Full");
         xSemaphoreGive(xTxMutex);
 
-        /* 模擬偶爾關閉中斷 (Critical Section) */
+        // 模擬關中斷 (Critical Section) 
         if (seq % 5 == 0) {
             irq_masked = 1;
             print_time("[Driver] Mask IRQ (Critical Section)");
@@ -123,7 +123,7 @@ static void vFirmwareProc(void *p)
     TickType_t last_active = xTaskGetTickCount();
 
     for (;;) {
-        /*  取 TX Ring 資料 */
+        //  取 TX Ring 資料 
         xSemaphoreTake(xTxMutex, portMAX_DELAY);
         if (dma_pop(&tx_ring, &buf, &len) == 0) {
             fw_sleep = 0;  // Wake up
@@ -134,7 +134,7 @@ static void vFirmwareProc(void *p)
             vTaskDelay(pdMS_TO_TICKS(FW_PROC_TIME)); // 模擬處理時間
             sys_time_ms += FW_PROC_TIME;
 
-            /*  產生 ACK 並放入 RX Ring */
+            //  產生 ACK 放入 RX Ring 
             ack = pvPortMalloc(sizeof(wifi_pkt_t));
             ack->seq = pkt->seq;
             snprintf(ack->payload, sizeof(ack->payload), "ACK #%lu", (unsigned long)pkt->seq);
@@ -146,7 +146,7 @@ static void vFirmwareProc(void *p)
 
             vPortFree(pkt);
 
-            /* 模擬中斷通知 Driver */
+            // 模擬中斷通知 Driver 
             if (!irq_masked)
                 xSemaphoreGive(xIRQ_Sem);
             else
@@ -176,7 +176,7 @@ static void vDriverBottomHalf(void *p)
         if (xSemaphoreTake(xIRQ_Sem, portMAX_DELAY) == pdTRUE) {
             irq_masked = 1; // 模擬中斷期間關閉中斷
 
-            /*  Driver 從 RX Ring 收取 ACK */
+            //  Driver 從 RX Ring 收取 ACK
             xSemaphoreTake(xRxMutex, portMAX_DELAY);
             if (sdio_read(&buf, &len) == 0) {
                 pkt = (wifi_pkt_t *)buf;
