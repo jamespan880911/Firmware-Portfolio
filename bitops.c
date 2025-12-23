@@ -1,5 +1,5 @@
-#include <stdio.h>
-
+#include<stdio.h>
+#include<stdint.h>
 
 #define set_bit(x, n) ((x) |= (1 << (n)))
 #define clear_bit(x, n) ((x) &= ~(1 << (n)))
@@ -62,6 +62,13 @@ int hex_equal(unsigned int x){
         return 1;
     }
     return 0;
+}
+
+//反轉32bit
+
+uint32_t reverseBit(uint32_t n){
+    uint32_t ret = 0;
+    
 }
 
 int main(){

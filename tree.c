@@ -64,7 +64,7 @@ struct TreeNode* searchBST(struct TreeNode *root, int target){
         return NULL;
     }
 
-    //要記得return 左右子樹的BST funtion，找的的答案才會傳到Stack的最上層來
+    //要記得return 左右子樹的BST funtion，因為是一層層往下找，找到沒有為止，最後不用再全部彈上來，所以用return
     if (target == root->val){
         return root;
     }
@@ -77,3 +77,43 @@ struct TreeNode* searchBST(struct TreeNode *root, int target){
 
     return NULL;
 }
+
+struct TreeNode* insertBST(struct TreeNode *root, int target){
+    if (root == NULL){
+        //找到對的位子，把要插入的node return回去給父節點
+        struct TreeNode *node = malloc(sizeof(struct TreeNode));
+        node->val = target;
+        node->left = NULL;
+        node->right = NULL;
+        return node;
+    }
+
+    if (target < root->val){
+        root->left = insertBST(root->left, target);
+    }
+    else{
+        root->right = insertBST(root->right, target);
+    }
+
+    //回傳root是因為要把tree一層層往上接
+    return root;
+}
+
+struct TreeNode* invertTree(struct TreeNode* root){
+    if (root == NULL){
+        return NULL;
+    }
+
+    //先往左右遞迴下去最深的子樹，再往上stack回去一層層交換左右
+    struct TreeNode *left = invertTree(root->left);
+    struct TreeNode *right = invertTree(root->right);
+
+    root->left = right;
+    root->right = left;
+
+    return root;
+}
+
+
+
+
