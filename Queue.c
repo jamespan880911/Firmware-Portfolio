@@ -2,14 +2,14 @@
 #include <stdlib.h>
 #include <stdint.h>
 
-typedef struct ListNode{
-    struct ListNode *next;
+typedef struct Node{
+    struct Node *next;
     uint32_t data;
-}ListNode;
+}Node;
 
 typedef struct Queue{
-    struct ListNode *head;
-    struct ListNode *tail;
+    struct Node *head;
+    struct Node *tail;
     void (*qpush)(uint32_t);
     void (*qpop)();
 }Queue;
@@ -17,8 +17,8 @@ typedef struct Queue{
 Queue *queue = NULL;
 
 void qpush(uint32_t val){
-    ListNode *temp = NULL;
-    temp = malloc(sizeof(ListNode));
+    Node *temp = NULL;
+    temp = malloc(sizeof(Node));
     if (queue->head == NULL){
         queue->head = temp;
         queue->tail = temp;
@@ -36,7 +36,7 @@ void qpush(uint32_t val){
 }
 
 void qpop(){
-    ListNode *temp = NULL;
+    Node *temp = NULL;
     if (queue->head == NULL){
         queue->tail = NULL;
         return;
@@ -59,7 +59,7 @@ void init_queue(struct Queue **Q){
 }
 
 void print_queue(struct Queue *q){
-    ListNode *temp = q->head;
+    Node *temp = q->head;
     while(temp != NULL){
         printf("%u -> ", temp->data);
         temp = temp->next;

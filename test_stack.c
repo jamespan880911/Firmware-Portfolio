@@ -1,13 +1,13 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-struct ListNode{
+struct Node{
     int data;
-    struct ListNode *next;
+    struct Node *next;
 };
 
 struct Stack{
-  struct ListNode *top;
+  struct Node *top;
 };
 
 
@@ -16,13 +16,13 @@ void spop(struct Stack *s){
         printf("Stack is empty\n");
         return;
     }
-    struct ListNode *tmp = s->top;
+    struct Node *tmp = s->top;
     s->top = s->top->next;
     free(tmp);
 }
 
 void spush(struct Stack *s, int data){
-    struct ListNode *node = malloc(sizeof(struct ListNode));
+    struct Node *node = malloc(sizeof(struct Node));
     node->data = data;
     node->next = s->top;
     s->top = node;
@@ -37,7 +37,7 @@ void s_top(struct Stack *s){
 }
 
 void print_s(struct Stack *s){
-    struct ListNode *cur = s->top;
+    struct Node *cur = s->top;
     if (cur == NULL){
         printf("Stack is empty\n");
     }

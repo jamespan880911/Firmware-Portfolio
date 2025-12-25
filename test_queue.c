@@ -1,18 +1,18 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-struct ListNode{
-    struct ListNode *next;
+struct Node{
+    struct Node *next;
     int data;
 };
 
 struct Queue{
-    struct ListNode *head;
-    struct ListNode *tail;
+    struct Node *head;
+    struct Node *tail;
 };
 
 void qpush(struct Queue *q, int data){
-    struct ListNode *node = malloc(sizeof(struct ListNode));
+    struct Node *node = malloc(sizeof(struct Node));
     node->data = data;
     node->next = NULL;
 
@@ -31,7 +31,7 @@ int qpop(struct Queue *q){
     if (q->head == NULL){
         return -1;
     }
-    struct ListNode *tmp = q->head;
+    struct Node *tmp = q->head;
     q->head = q->head->next;
     ans = tmp->data;
     free(tmp);
@@ -48,7 +48,7 @@ void init_queue(struct Queue *q){
 }
 
 int qsearch(struct Queue *q, int data){
-    
+
 }
 
 int main(){

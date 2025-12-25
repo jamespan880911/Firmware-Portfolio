@@ -59,15 +59,15 @@ int hex_equal(unsigned int x){
 }
 
 //定義struct結尾記得要加;（#define 定義Macor不用加;）
-struct ListNode{
-    struct ListNode *next;
+struct Node{
+    struct Node *next;
     int data;
 };
 
 //頭節點
-void push_node(struct ListNode **head, int data){
-    struct ListNode *node = NULL;
-    node = malloc(sizeof(struct ListNode));
+void push_node(struct Node **head, int data){
+    struct Node *node = NULL;
+    node = malloc(sizeof(struct Node));
     if (!node) return; // 記得檢查有沒有heap成功
     node->data = data;
     node->next = NULL;
@@ -85,10 +85,10 @@ void push_node(struct ListNode **head, int data){
 }
 
 //尾節點
-void append_node(struct ListNode **head, int data){
-    struct ListNode *cur = *head;
-    struct ListNode *node = NULL;
-    node = malloc(sizeof(struct ListNode));
+void append_node(struct Node **head, int data){
+    struct Node *cur = *head;
+    struct Node *node = NULL;
+    node = malloc(sizeof(struct Node));
     if (!node) return;
     node->data = data;
     node->next = NULL;
@@ -105,8 +105,8 @@ void append_node(struct ListNode **head, int data){
     return;
 }
 
-void print_list(struct ListNode *head){
-    struct ListNode *cur = head;
+void print_list(struct Node *head){
+    struct Node *cur = head;
     while (cur){
         printf("%d ->", cur->data);
         cur = cur->next;
@@ -114,9 +114,9 @@ void print_list(struct ListNode *head){
     printf("NULL\n");
 }
 
-void free_list(struct ListNode **head){
-    struct ListNode *cur = *head;
-    struct ListNode *pre = NULL;
+void free_list(struct Node **head){
+    struct Node *cur = *head;
+    struct Node *pre = NULL;
 
     while (cur){
         pre = cur;
@@ -127,9 +127,9 @@ void free_list(struct ListNode **head){
     *head = NULL;  //結束後要記得把頭設成null，不然會dangling pointer
 }
 
-struct ListNode* deleteDuplicates_2(struct ListNode *head){
-    struct ListNode *cur = head;
-    struct ListNode *pre = NULL;
+struct Node* deleteDuplicates_2(struct Node *head){
+    struct Node *cur = head;
+    struct Node *pre = NULL;
     if (head == NULL) return NULL;
 
     while (cur && cur->next){
@@ -144,11 +144,11 @@ struct ListNode* deleteDuplicates_2(struct ListNode *head){
     return head;
 }
 
-struct ListNode* deleteDuplicates(struct ListNode *head){
-    struct ListNode *cur = head;
+struct Node* deleteDuplicates(struct Node *head){
+    struct Node *cur = head;
     while (cur && cur->next){
         if (cur->data == cur->next->data){
-            struct ListNode *tmp = cur->next;
+            struct Node *tmp = cur->next;
             cur->next = cur->next->next;
             free(tmp);
             continue;
@@ -158,13 +158,13 @@ struct ListNode* deleteDuplicates(struct ListNode *head){
     return head;
 }
 
-struct ListNode* merge_two_list(struct ListNode *list1, struct ListNode *list2){
-    struct ListNode *dum = NULL;
-    dum = malloc(sizeof(struct ListNode));
+struct Node* merge_two_list(struct Node *list1, struct Node *list2){
+    struct Node *dum = NULL;
+    dum = malloc(sizeof(struct Node));
     if (!dum) return NULL; //記得malloc完都要檢查有沒有heap成功
     dum->next = NULL;
     dum->data = 0;
-    struct ListNode *head = dum;
+    struct Node *head = dum;
 
     while(list1 && list2){
         if(list1->data < list2->data){
@@ -186,17 +186,17 @@ struct ListNode* merge_two_list(struct ListNode *list1, struct ListNode *list2){
     if (list2){
         head->next = list2;
     }
-    struct ListNode *result = dum->next;
+    struct Node *result = dum->next;
     free(dum);
     return result;
 }
 
 
-void reverseList(struct ListNode **head){
-    struct ListNode *cur = *head;
-    struct ListNode *pre = NULL;
+void reverseList(struct Node **head){
+    struct Node *cur = *head;
+    struct Node *pre = NULL;
     while (cur){
-        struct ListNode *tmp = cur->next;
+        struct Node *tmp = cur->next;
         cur->next = pre;
         pre = cur;
         cur = tmp;
@@ -333,8 +333,8 @@ struct result find_min_max(int a, int b, int c){
 
 
 struct Queue{
-    struct ListNode *head;
-    struct ListNode *tail;
+    struct Node *head;
+    struct Node *tail;
 };
 
 struct Queue *init_queue(){
@@ -345,7 +345,7 @@ struct Queue *init_queue(){
 }
 
 void qpush(struct Queue *queue, int data){
-    struct ListNode *node = malloc(sizeof(struct ListNode));
+    struct Node *node = malloc(sizeof(struct Node));
     node->data = data;
     node->next = NULL;
 
@@ -366,7 +366,7 @@ void qpop(struct Queue *queue){
         return;
     }
     else{
-        struct ListNode *tmp = queue->head;
+        struct Node *tmp = queue->head;
         queue->head = queue->head->next;
         free(tmp);
         if(queue->head == NULL){
@@ -381,7 +381,7 @@ void print_queue(struct Queue *queue){
         return;
     }
     else{
-        struct ListNode *cur = queue->head;
+        struct Node *cur = queue->head;
         while (cur){
             printf("%d -> ", cur->data);
             cur = cur->next;
@@ -469,9 +469,9 @@ void quick_sort(int *a,int left, int right){
 }
 
 //刪除指定pos的Linklist
-struct ListNode *delete_node_index(struct ListNode **head, int index){
-    struct ListNode *cur = *head;
-    struct ListNode *pre = NULL;
+struct Node *delete_node_index(struct Node **head, int index){
+    struct Node *cur = *head;
+    struct Node *pre = NULL;
 
     if (index < 0){
         return NULL;
@@ -498,14 +498,14 @@ struct ListNode *delete_node_index(struct ListNode **head, int index){
 
 //翻轉Linklist
 
-void reverse_list(struct ListNode **head){
+void reverse_list(struct Node **head){
     if (*head == NULL){
         return;
     }
-    struct ListNode *cur = *head;
-    struct ListNode *pre = NULL;
+    struct Node *cur = *head;
+    struct Node *pre = NULL;
     while (cur){
-        struct ListNode *tmp = cur->next;
+        struct Node *tmp = cur->next;
         cur->next = pre;
         pre = cur;
         cur = tmp;
@@ -514,8 +514,8 @@ void reverse_list(struct ListNode **head){
 }
 
 //LinkList search
-struct ListNode *List_search(struct ListNode *head, int data){
-    struct ListNode *cur = head;
+struct Node *List_search(struct Node *head, int data){
+    struct Node *cur = head;
     if (cur == NULL){
         return NULL;
     }
@@ -589,9 +589,9 @@ void B(int *arr, int len){
 
 //delete再練習
 
- void DE(struct ListNode **head, int pos){
-    struct ListNode *cur = *head;
-    struct ListNode *pre = NULL;
+ void DE(struct Node **head, int pos){
+    struct Node *cur = *head;
+    struct Node *pre = NULL;
 
     if (pos < 0){
         return;

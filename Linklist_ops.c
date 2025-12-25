@@ -1,16 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct ListNode {
+struct Node {
     int data;
-    struct ListNode *next;
+    struct Node *next;
 };
 
 //加入尾部節點
-void append_node(struct ListNode **head, int data){
-    struct ListNode *new_node = NULL;
-    struct ListNode *cur = *head;
-    new_node = malloc(sizeof(struct ListNode));
+void append_node(struct Node **head, int data){
+    struct Node *new_node = NULL;
+    struct Node *cur = *head;
+    new_node = malloc(sizeof(struct Node));
     if (new_node == NULL) //如果沒有heap成功的檢查
         return;
     new_node->next = NULL;
@@ -28,9 +28,9 @@ void append_node(struct ListNode **head, int data){
 }
 
 //加入頭節點
-void push_node(struct ListNode **head, int data){
-    struct ListNode *new_node = NULL;
-    new_node = malloc(sizeof(struct ListNode));
+void push_node(struct Node **head, int data){
+    struct Node *new_node = NULL;
+    new_node = malloc(sizeof(struct Node));
     if (new_node == NULL)
         return;
     new_node->next = NULL;
@@ -41,8 +41,8 @@ void push_node(struct ListNode **head, int data){
 }
 
 //印出整條list
-void print_list(struct ListNode *head){
-    struct ListNode *ptr = head;
+void print_list(struct Node *head){
+    struct Node *ptr = head;
     while (ptr != NULL){
         printf("%d ", ptr->data);
         ptr = ptr->next;
@@ -51,9 +51,9 @@ void print_list(struct ListNode *head){
 }
 
 //刪除指定數值的節點
-void delete_node_value(struct ListNode **head, int val){
-    struct ListNode *prev = NULL;
-    struct ListNode *cur = *head;
+void delete_node_value(struct Node **head, int val){
+    struct Node *prev = NULL;
+    struct Node *cur = *head;
 
     while (cur && cur->data != val){
         prev = cur;
@@ -75,15 +75,15 @@ void delete_node_value(struct ListNode **head, int val){
 }
 
 //在指定位置插入節點
-void insert_node_pos(struct ListNode **head, int pos, int val){
-    struct ListNode *new_node = NULL;
-    new_node = malloc(sizeof(struct ListNode));
+void insert_node_pos(struct Node **head, int pos, int val){
+    struct Node *new_node = NULL;
+    new_node = malloc(sizeof(struct Node));
     if (new_node == NULL)
         return;
     new_node->next = NULL;
     new_node->data = val;
 
-    struct ListNode *cur = *head;
+    struct Node *cur = *head;
     
     for (int i = 1;cur && i < pos; i++){
         cur = cur->next;
@@ -104,8 +104,8 @@ void insert_node_pos(struct ListNode **head, int pos, int val){
 }
 
 //釋放整條list的記憶體空間(防止memory leak)
-void free_list(struct ListNode *head){
-    struct ListNode *cur = head;
+void free_list(struct Node *head){
+    struct Node *cur = head;
     while (head){
         cur = head;
         head = head->next;
@@ -114,14 +114,14 @@ void free_list(struct ListNode *head){
 }
 
 //刪除重複節點
-struct ListNode* deleteDuplicates(struct ListNode *head){
-    struct ListNode *cur = head;
+struct Node* deleteDuplicates(struct Node *head){
+    struct Node *cur = head;
     if (cur == NULL){
         return NULL;
     }
     while (cur != NULL && cur->next != NULL){
         if (cur->data == cur->next->data){
-            struct ListNode *tmp = cur->next;
+            struct Node *tmp = cur->next;
             cur->next = cur->next->next;
             free(tmp);
             continue;
@@ -131,10 +131,10 @@ struct ListNode* deleteDuplicates(struct ListNode *head){
     return head;
 }
 
-void reverseList(struct ListNode **head){
-    struct ListNode *cur = *head;
-    struct ListNode *prev = NULL;
-    struct ListNode *next = NULL;
+void reverseList(struct Node **head){
+    struct Node *cur = *head;
+    struct Node *prev = NULL;
+    struct Node *next = NULL;
 
     while (cur != NULL){
         next = cur->next;
@@ -148,10 +148,10 @@ void reverseList(struct ListNode **head){
 }
 
 //合併兩條Linklist
-struct ListNode* merge_TwoList(struct ListNode* list1, struct ListNode* list2){
-    struct ListNode *dummy = NULL;
-    dummy = malloc(sizeof(struct ListNode));
-    struct ListNode* cur = dummy;
+struct Node* merge_TwoList(struct Node* list1, struct Node* list2){
+    struct Node *dummy = NULL;
+    dummy = malloc(sizeof(struct Node));
+    struct Node* cur = dummy;
 
     while (list1 && list2){
         if (list1->data < list2->data){
@@ -171,15 +171,15 @@ struct ListNode* merge_TwoList(struct ListNode* list1, struct ListNode* list2){
     else if (list2){
         cur->next = list2;
     }
-    struct ListNode *ans = dummy->next;
+    struct Node *ans = dummy->next;
     free(dummy);
     return ans;
 }
 
 //面試寫的版本（比較亂但還是可以work，還是用原版可讀性比較高）
-struct ListNode* deleteDuplicates_2(struct ListNode *head){
-    struct ListNode *cur = head;
-    struct ListNode *pre = NULL;
+struct Node* deleteDuplicates_2(struct Node *head){
+    struct Node *cur = head;
+    struct Node *pre = NULL;
     if (head == NULL) return NULL;
 
     while (cur && cur->next){
@@ -195,8 +195,8 @@ struct ListNode* deleteDuplicates_2(struct ListNode *head){
 }
 
 int main(){
-    struct ListNode *list1 = NULL;
-    struct ListNode *list2 = NULL;
+    struct Node *list1 = NULL;
+    struct Node *list2 = NULL;
 
     append_node(&list1, 1);
     append_node(&list1, 1);
@@ -213,7 +213,7 @@ int main(){
     append_node(&list2, 4);
     append_node(&list2, 6);
 
-    struct ListNode *merge = merge_TwoList(list1, list2);
+    struct Node *merge = merge_TwoList(list1, list2);
     print_list(merge);
     free_list(merge);
     return 0;

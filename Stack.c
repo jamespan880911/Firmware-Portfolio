@@ -2,13 +2,13 @@
 #include <stdlib.h>
 #include <stdint.h>
 
-typedef struct ListNode{
-    struct ListNode *next;
+typedef struct Node{
+    struct Node *next;
     uint32_t data;
-}ListNode;
+}Node;
 
 typedef struct Stack{
-    struct ListNode *top;
+    struct Node *top;
     void (*spush)(uint32_t);
     void (*spop)();
 }Stack;
@@ -16,7 +16,7 @@ typedef struct Stack{
 Stack *stack = NULL;
 
 void spush(uint32_t val){
-    ListNode *tmp = malloc(sizeof(ListNode));
+    Node *tmp = malloc(sizeof(Node));
     tmp->data = val;
     tmp->next = NULL;
     tmp->next = stack->top;
@@ -25,7 +25,7 @@ void spush(uint32_t val){
 }
 
 void spop(){
-    ListNode *tmp = NULL;
+    Node *tmp = NULL;
     if (stack->top == NULL){
         return;
     }
@@ -38,7 +38,7 @@ void spop(){
 }
 
 void print_stack(Stack *s){
-    ListNode *tmp = s->top;
+    Node *tmp = s->top;
     while (tmp != NULL){
         printf("%u -> ", tmp->data);
         tmp = tmp->next;
