@@ -13,6 +13,7 @@ typedef struct{
     int size;
 }MyLinkedList;
 
+//輔助函式（ststic限定此檔案內可見）
 static struct Node* createNode(int val){
     struct Node *node = malloc(sizeof(struct Node));
     if (node){
