@@ -11,7 +11,7 @@
 #define FW_PROC_TIME      150
 #define FW_IDLE_TIMEOUT   500
 
-
+//
 typedef struct {
     uint8_t  valid;
     uint32_t len;

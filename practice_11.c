@@ -629,6 +629,22 @@ int getMod(int a, int b){
     return ans;
 }
 
+//big-endian或little-endian檢查
+void check_endian(){
+    int i = 1;
+
+    char *c = (char*)&i;
+
+    if(*c){
+        printf("little-endian\n");
+        return;
+    }
+    else{
+        printf("big-endian\n");
+        return;
+    }
+}
+
 int main(){
     //int *p = (int *)0x8265;
     //*p = 0x2235;
@@ -644,5 +660,7 @@ int main(){
     print_queue(q);
     qpop(q);
     print_queue(q);
+
+    check_endian();
     return 0;
 }

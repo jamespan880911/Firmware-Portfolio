@@ -131,6 +131,7 @@ struct Node* deleteDuplicates(struct Node *head){
     return head;
 }
 
+//翻轉鏈錶
 void reverseList(struct Node **head){
     struct Node *cur = *head;
     struct Node *prev = NULL;
@@ -192,6 +193,25 @@ struct Node* deleteDuplicates_2(struct Node *head){
         }
     }
     return head;
+}
+
+//反轉鏈錶練習
+void REVERT(struct Node **head){
+    if (*head == NULL || (*head)->next == NULL){
+        return;
+    }
+
+    struct Node *pre = NULL;
+    struct Node *cur = *head;
+
+    while(cur){
+        struct Node *tmp = cur->next;
+        cur->next = pre;
+        pre = cur;
+        cur = tmp;
+    }
+    
+    *head = pre;
 }
 
 int main(){

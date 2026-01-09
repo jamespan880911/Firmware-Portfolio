@@ -1,9 +1,10 @@
 #include<stdio.h>
 #include<stdint.h>
 
-#define set_bit(x, n) ((x) |= (1 << (n)))
-#define clear_bit(x, n) ((x) &= ~(1 << (n)))
-#define toggle_bit(x, n) ((x) ^= (1 << (n)))
+#define set_bit(x, n) ((x) |= (1U << (n)))
+#define clear_bit(x, n) ((x) &= ~(1U << (n)))
+#define toggle_bit(x, n) ((x) ^= (1U << (n)))
+#define check_bit(x, n) ((x) & (1U << (n)))
 #define array_size(arr) (sizeof(arr) / sizeof(arr[0]))
 #define Max(a, b) (((a) > (b)) ? (a) : (b))
 
@@ -64,12 +65,29 @@ int hex_equal(unsigned int x){
     return 0;
 }
 
-//反轉32bit
+//big-endian或little-endian檢查
+int check_endian(){
+    int i = 1;
 
+    char *c = (char*)&i;
+
+    if(*c){
+        printf("little-endian");
+        return 1;
+    }
+    else{
+        printf("big-endian");
+        return 0;
+    }
+}
+
+//反轉32bit
+/*
 uint32_t reverseBit(uint32_t n){
     uint32_t ret = 0;
     
 }
+*/
 
 int main(){
     int *p = (int*) 0x8264;
@@ -77,3 +95,20 @@ int main(){
     return 0;
 }
 
+
+
+#define BIT(n) (1U << (n))
+#define SET_BIT(x, n) ((x) |= (1U << (n)))
+#define CLEAR_BIT(x, n) ((x) &= ~(1U << (n)))
+#define TOGGLE_BIT(x, n) ((x) ^= (1U << (n)))
+#define CHECK_BIT(x, n) ((x) & BIT(n))
+#define MAX(a, b) (((a) > (b)) ? (a) : (b))
+
+int a;  //一個整數型別
+int *a;
+int **a;
+int a[10];
+int *a[10];
+int (*a)[10];
+int (*fun)(int);
+int (*fun[10])(int);

@@ -1,5 +1,6 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 
 typedef struct{
@@ -58,3 +59,14 @@ void FanControlTask(void){
         sleep(CONTROL_INTERVAL_MS);
     }
 }
+
+//一個funtion pointer指向一個裝有funtion的陣列，裡面的funtion都是吃一個int的參數，並沒有回傳值(OpenBMC常用，拿來做command table)
+void (cmd_table[])(int) = {start_fun, stop_fun, reset_fun};
+//互叫第第二個函式
+cmd_table[1](10);
+
+
+//memcopy的應用。把src的位置搬n個Bytes到dest指向的位置。
+//用在記憶體沒對齊的時候（解決Aligment問題）
+memcopy(void *dest, const void *src, size_t n);
+
