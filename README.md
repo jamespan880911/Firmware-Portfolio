@@ -1,37 +1,43 @@
-#  C / Embedded Practice Repository
+# Embedded System & C Programming Practice
 
-這是一個用於練習與強化底層系統概念的 C 語言實作倉庫，內容涵蓋資料結構、演算法、以及嵌入式系統基礎開發。  
-包含自行實作的 **Stack、Queue、Linked List、Sorting、Binary Search、Bit Operations** 等程式範例。
+這是一個專注於 **嵌入式系統底層開發**、**即時作業系統 (RTOS)** 機制模擬、以及 **C 語言資料結構** 實作的技術倉庫。
 
----
-
-##  專案特點
-
-###  FreeRTOS  Driver / Firmware 模擬
-以 FreeRTOS 為基礎，模擬 Driver 與 Firmware 間的資料流：  
-實作 **DMA Ring Buffer、IRQ 同步機制、Bottom-half 任務分工、Firmware Power Save 模擬**。  
-重現驅動與韌體的封包傳輸與中斷互動，分析 race condition、互斥鎖與中斷遮罩的設計取捨。
-
-###  資料結構與演算法
-手刻 **Stack / Queue / Linked List / Sorting / Searching** 等常用資料結構與演算法，  
-強化記憶體操作、指標運算與結構體布局（alignment, padding, endianness）。
-
-###  C 語言底層練習
-涵蓋 **指標運算、bitwise 操作、記憶體管理（malloc/free）、critical section、volatile 與中斷旗標（ISR flag）** 等概念。  
-聚焦於系統層邏輯與實際執行行為的對應。
+本專案記錄了我從底層邏輯（Bitwise, Pointers）到系統架構（ISR, Concurrency）的學習與實作過程。
 
 ---
 
-##  技能涵蓋
-`C / C++` · `FreeRTOS` · `Embedded System` · `DMA / Interrupt` · `Data Structure` · `Memory Layout`
+## 🚀 Key Highlights (精選亮點)
+
+### 1. FreeRTOS Wi-Fi Driver/Firmware Simulation
+> **位置：** `projects/freertos_sim/`
+模擬 Wi-Fi 晶片驅動程式 (Driver) 與韌體 (Firmware) 之間的非同步通訊模型。
+* **核心技術：** FreeRTOS Tasks, Mutex, Counting Semaphores, Software Interrupts.
+* **實作細節：**
+    * **DMA Ring Buffer**：實作生產者-消費者模型，處理 Driver 與 Firmware 間的高速資料流。
+    * **Interrupt Handling**：模擬 Top-half (ISR) 與 Bottom-half (Task) 的中斷處理分工機制。
+    * **Concurrency Control**：利用 Mutex 保護 Shared Memory，解決 Race Condition 問題。
+    * **Power Management**：實作 Firmware 在 Idle 狀態下的省電模式 (Power Save Mode) 邏輯。
+
+### 2. Smart Aquarium Temperature Controller
+> **位置：** `projects/smart_aquarium/`
+基於 Arduino 的水族箱溫控系統，專注於硬體保護邏輯與感測器整合。
+* **核心技術：** Hysteresis Control, Non-blocking Delay.
+* **實作細節：**
+    * **遲滯溫控演算法 (Hysteresis)**：設計雙閾值 (High/Low Threshold) 開關邏輯，防止繼電器在臨界溫度頻繁切換 (Chattering)，延長硬體壽命。
+    * **延遲散熱保護 (Cool-down Logic)**：實作Non-blocking Delay，在製冷結束後持續運作風扇 120 秒以排除餘熱，且不卡住主迴圈 (Main Loop)。
+    * **Sensor Integration**：整合 OneWire 通訊協定讀取 DS18B20 溫度數值。
 
 ---
 
-##  About
-此專案作為個人韌體開發與系統程式學習紀錄，專注於**理解軟硬體之間的互動**，  
-並透過實作強化對 **作業系統機制（task scheduling / semaphore / critical section）**  
-與通訊資料流的整體概念。
+## 📂 Repository Structure (目錄結構)
 
----
-
-🛠️ *Made with FreeRTOS and pure C practice.*
+```text
+.
+├── algorithms/          # 基礎演算法 (Sorting, Binary Search, Math)
+├── data_structures/     # 手刻資料結構 (Linked List, Queue, Stack, Tree)
+├── projects/            # 完整的小型系統專案
+│   ├── freertos_sim/    # FreeRTOS 驅動模擬
+│   └── smart_aquarium/  # 溫控系統實作
+├── system_programming/  # 系統程式練習 (Bitwise Ops, Memory, String Utils)
+├── leetcode/            # LeetCode 刷題紀錄 (Blind 75)
+└── playground/          # 實驗性質程式碼 (Prototypes)
