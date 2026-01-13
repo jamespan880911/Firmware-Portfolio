@@ -5,4 +5,10 @@ a.out
 
 .DS_STore
 
+.vscode/
+
+test_*
+
+build/
+
 *.log
