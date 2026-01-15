@@ -6,10 +6,12 @@
 
 ---
 
-## 🚀 Key Highlights (精選亮點)
+## 🚀 Key Highlights 
 
 ### 1. FreeRTOS Wi-Fi Driver/Firmware Simulation
-> **位置：** `projects/freertos_sim/`
+> **⚠️ 註：完整專案代碼位於獨立 Repository，請點擊下方連結前往檢視。**
+> 👉 **[前往專案：FreeRTOS-WiFi-Sim](https://github.com/jamespan880911/FreeRTOS-WiFi-Sim)**
+
 模擬 Wi-Fi 晶片驅動程式 (Driver) 與韌體 (Firmware) 之間的非同步通訊模型。
 * **核心技術：** FreeRTOS Tasks, Mutex, Counting Semaphores, Software Interrupts.
 * **實作細節：**
@@ -20,7 +22,7 @@
 
 ### 2. Smart Aquarium Temperature Controller
 > **位置：** `projects/smart_aquarium/`
-基於 Arduino 的水族箱溫控系統，專注於硬體保護邏輯與感測器整合。
+基於 Arduino 的冷水機溫控系統，專注於硬體保護邏輯與感測器整合。
 * **核心技術：** Hysteresis Control, Non-blocking Delay.
 * **實作細節：**
     * **遲滯溫控演算法 (Hysteresis)**：設計雙閾值 (High/Low Threshold) 開關邏輯，防止繼電器在臨界溫度頻繁切換 (Chattering)，延長硬體壽命。
